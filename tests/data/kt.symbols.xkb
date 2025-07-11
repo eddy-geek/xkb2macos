@@ -1,0 +1,335 @@
+// $XKeyboardConfig: xkeyboard-config/symbols/br,v 1.15 2007-10-28 08:10:48 svu Exp $
+// $XdotOrg: xc/programs/xkbcomp/symbols/br,v 1.1.4.3 2004/03/05 13:41:32 eich Exp $
+// $XFree86: xc/programs/xkbcomp/symbols/br,v 1.3 2003/04/19 12:22:11 pascal Exp $
+//
+// based on a keyboard map from an 'xkb/symbols/br' file
+
+// Text layout inspired from br(abnt2), for 101-key keyboards
+
+//TODO
+//1. accented_qwerty (from scratch)
+//2. new_numbers_top
+//3. new_numbers_bottom
+//4. new_symbols
+//5. us_numbers_bottom
+// ktn = num = 1+3+4 +c
+// uss = us  = 1+5+us+c
+// gbs = gb  = 1+5+gb+@+c
+
+xkb_symbols "accented_qwerty" {
+
+    key <AD01>	{ [         q,   Q,       greaterthanequal,        0x10000b6 ]	};
+    key <AD02>	{ [         w,   W,          egrave,       ediaeresis ]	};
+    key <AD03>	{ [         e,   E,          eacute,    Greek_epsilon ]	};
+    key <AD04>	{ [         r,   R,     ecircumflex,       registered ]	};
+    key <AD05>	{ [         t,   T,      dead_caron,        trademark ]	};
+    key <AD06>	{ [         y,   Y,   dead_abovedot,    dead_belowdot ]	};
+    key <AD07>	{ [         u,   U,     ocircumflex, dead_doubleacute ]	};
+    key <AD08>	{ [         i,   I,          oacute,              yen ]	};
+    key <AD09>	{ [         o,   O,          otilde,               oe ]	};
+    key <AD10>	{ [         p,   P,               p,      ordfeminine ]	};
+
+    key <AC01>	{ [         a,   A,          atilde,               ae ]	};
+    key <AC02>	{ [         s,   S,          agrave,          section ]	};
+    key <AC03>	{ [         d,   D,          aacute,      Greek_delta ]	};
+    key <AC04>	{ [         f,   F,     acircumflex,        variation ]	};
+    key <AC05>	{ [         g,   G,    dead_cedilla,   dead_diaeresis ]	};
+    key <AC06>	{ [         h,   H,     dead_macron, dead_belowmacron ]	};
+    key <AC07>	{ [         j,   J,     icircumflex,   dead_abovering ]	};
+    key <AC08>	{ [         k,   K,          iacute,       idiaeresis ]	};
+    key <AC09>	{ [         l,   L,               i,        masculine ]	};
+
+    key <AB01>	{ [         z,   Z,            bar,leftdoublequotemark]	};
+    key <AB02>	{ [         x,   X,         ugrave,        udiaeresis ]	};
+    key <AB03>	{ [         c,   C,         uacute,         copyright ]	};
+    key <AB04>	{ [         v,   V,   ucircumflex,rightdoublequotemark]	};
+    key <AB05>	{ [         b,   B,  guillemotleft,    guillemotright ]	};
+    key <AB06>	{ [         n,   N,         ntilde,         0x1002116 ]	};
+    key <AB07>	{ [         m,   M,             mu,         downarrow ]	};
+    key <AB08>	{ [     comma,      less,       ccedilla,   leftarrow ]	};
+    key <AB09>	{ [    period,   greater, periodcentered,  rightarrow ]	};
+    key <AB10>	{ [     slash,  question,   questiondown,     uparrow ]	};
+};
+
+
+xkb_symbols "right_symbols" {
+
+    key <TLDE>	{ [     grave,    asciitilde,    dead_grave,   dead_tilde ]	};
+
+    key <AE11>	{ [     minus,         grave,dead_diaeresis,   dead_grave ]	};
+    key <AE12>	{ [ semicolon,   asciicircum,   dead_acute,dead_circumflex]	};
+
+
+    key <AD11>	{ [ parenleft,     braceleft,     0x10025c1,    0x10025b3 ]	};
+    key <AD12>	{ [parenright,    braceright,     0x10025b7,    0x10025bd ]	};
+
+    key <AC10>	{ [     colon,        exclam,      ccedilla,     Ccedilla ]	};
+    key <AC11>	{ [apostrophe,        dollar,      multiply,    0x1002715 ]	};
+    key <BKSL>	{ [  quotedbl,dead_diaeresis,     0x1002026,    0x1002713 ]	};
+
+};
+
+// xkb_symbols "right_symbols" {
+//
+//     key <TLDE>	{ [quotedbl,  asciitilde,        grave,    dead_tilde ]	};
+//
+//     key <AE11>	{ [ minus,           grave, dead_diaeresis,  dead_grave ]	};
+//     key <AE12>	{ [ semicolon, asciicircum, dead_acute, dead_circumflex ]	};
+//
+//
+//     key <AD11>	{ [ parenleft,  braceleft, 0x10025c1,       0x10025b3 ]	};
+//     key <AD12>	{ [parenright, braceright, 0x10025b7,       0x10025bd ]	};
+//
+//     key <AC10>	{ [     colon,  exclam,    ccedilla,         Ccedilla ]	};
+//     key <AC11>	{ [apostrophe,  dollar,    multiply,        0x1002715 ]	};
+//     key <BKSL>	{ [ semicolon,      at,   0x1002026,        0x1002713 ]	};
+//
+// };
+
+
+xkb_symbols "right_symbols_us" {
+
+    key <TLDE> {	[dead_grave,	asciitilde,	grave,	dead_tilde ]	};
+
+    key <AE11> {	[     minus,	underscore	]	};
+    key <AE12> {	[     equal,	plus		]	};
+
+    key <AD11> {	[ bracketleft,	braceleft	]	};
+    key <AD12> {	[ bracketright,	braceright	]	};
+
+    key <AC10> {	[ semicolon,	colon		]	};
+    key <AC11> {	[ apostrophe,	quotedbl	]	};
+
+    key <AB08> {	[     comma,	less		]	};
+    key <AB09> {	[    period,	greater		]	};
+    key <AB10> {	[     slash,	question	]	};
+
+    key <BKSL> {	[ backslash,         bar	]	};
+};
+
+
+
+xkb_symbols "toprow" {
+
+    key <AE01>	{ [ NoSymbol, NoSymbol,  onesuperior,    exclamdown ]	};
+    key <AE02>	{ [ NoSymbol, NoSymbol,    backslash,   twosuperior ]};
+    key <AE03>	{ [ NoSymbol, NoSymbol,threesuperior, threequarters ]	};
+    key <AE04>	{ [ NoSymbol, NoSymbol,     EuroSign,       notsign ]	};
+    key <AE05>	{ [ NoSymbol, NoSymbol,      percent,     0x10025a1 ]	};
+    key <AE06>	{ [ NoSymbol, NoSymbol,          bar,        circle ]	};
+    key <AE07>	{ [ NoSymbol, NoSymbol,    ampersand,     plusminus ]	};
+    key <AE08>	{ [ NoSymbol, NoSymbol,     division,      infinity ]	};
+    key <AE09>	{ [ NoSymbol, NoSymbol,    0x1002248,      notequal ]	};
+    key <AE10>	{ [ NoSymbol, NoSymbol,       degree,        oslash ]	};
+};
+
+xkb_symbols "toprow_numbers" {
+
+    include "kt(toprow)"
+    key <AE01>	{ [     1,    underscore ]	};
+    key <AE02>	{ [     2,           bar ]	};
+    key <AE03>	{ [     3,    numbersign ]	};
+    key <AE04>	{ [     4,     backslash ]	};
+    key <AE05>	{ [     5,   bracketleft ]	};
+    key <AE06>	{ [     6,  bracketright ]	};
+    key <AE07>	{ [     7,     ampersand ]	};
+    key <AE08>	{ [     8,    underscore ]	};
+    key <AE09>	{ [     9,          plus ]	};
+    key <AE10>	{ [     0,             0 ]	};
+};
+
+
+xkb_symbols "toprow_symbols" {
+
+    include "kt(toprow)"
+    key <AE01>	{ [           1, 1 ]	};
+    key <AE02>	{ [  at, 2 ]	};
+    key <AE03>	{ [  numbersign, 3 ]	};
+    key <AE04>	{ [   underscore, 4 ]	};
+    key <AE05>	{ [ bracketleft, 5 ]	};
+    key <AE06>	{ [bracketright, 6 ]	};
+    key <AE07>	{ [       plus, 7 ]	};
+    key <AE08>	{ [    asterisk, 8 ]	};
+    key <AE09>	{ [       equal, 9 ]	};
+    key <AE10>	{ [           0, 0 ]	};
+};
+
+xkb_symbols "toprow_symbols_us" {
+
+    key <AE01> {	[	exclam 		  ,1	]	};
+    key <AE02> {	[	at		  ,2	]	};
+    key <AE03> {	[	numbersign	  ,3	]	};
+    key <AE04> {	[	dollar		  ,4	]	};
+    key <AE05> {	[	percent		  ,5	]	};
+    key <AE06> {	[	dead_circumflex	  ,6	]	};
+    key <AE07> {	[	ampersand	  ,7	]	};
+    key <AE08> {	[	asterisk	  ,8	]	};
+    key <AE09> {	[	parenleft	  ,9	]	};
+    key <AE10> {	[	parenright	  ,0	]	};
+};
+
+xkb_symbols "101_key" {
+    key <AE01>	{ [           1, 1 ]	};
+    key <AE02>	{ [           2, 2 ]	};
+
+};
+
+xkb_symbols "other" {
+
+//    key <LSGT>	{ [apostrophe, bar,  lessthanequal,  greaterthanequal ]	};
+
+
+    //include "compose(102)"  # Equivalent to:
+    key <LSGT> { type[Group1]="TWO_LEVEL", [ Multi_key, Multi_key, NoSymbol, NoSymbol ] };
+    include "kpdl(dot)"
+
+    //CapsLock as AltGr
+    replace key <CAPS> {
+        type[Group1]="ONE_LEVEL",
+        symbols[Group1] =
+            [ ISO_Level3_Shift ] };
+//    replace key <RALT> {
+//        type[Group1]="ONE_LEVEL",
+//        symbols[Group1] =
+//            [ ISO_Level3_Shift ] };
+//    modifier_map Mod5   { ISO_Level3_Shift };
+//http://www.xfree86.org/current/XKB-Enhancing4.html
+
+////    key <RALT> {
+////      type[Group1]="TWO_LEVEL",
+////      // Stops xkbcomp's complaints about multiple symbols.
+////      //type[Group2]="TWO_LEVEL",
+////      //type[Group3]="TWO_LEVEL",
+////      //type[Group4]="TWO_LEVEL",
+////      [ ISO_Level3_Shift, Multi_key ]   };
+////    modifier_map Mod5   { <RALT> };
+};
+
+xkb_symbols "num" {
+    name[Group1]="Brazil";
+
+    include "kt(accented_qwerty)"
+    include "kt(toprow_numbers)"
+    include "kt(right_symbols)"
+    include "kt(other)"
+};
+
+
+// Development layout for 101-key keyboard
+default
+xkb_symbols "dev" {
+    name[Group1]="Brazil";
+    include "kt(accented_qwerty)"
+    include "kt(toprow_symbols)"
+    include "kt(right_symbols)"
+    include "kt(other)"
+
+    key <LSGT>	{ type[Group1]="FOUR_LEVEL", [backslash,  plusminus, lessthanequal,  greaterthanequal ]	};
+
+    // .. and on LG Gram 16T90R this br/jp key is right control
+    // replace
+    key <AB11> { [ Control_R, Control_R ] };
+
+//    key <TLDE>	{ [  quotedbl,        bar,      notsign,      notsign ] };
+
+//    key <AE10>	{ [           0, 0 ]	};
+//    key <AE11>	{ [    asterisk,       grave, dead_acute, dead_grave      ]	};
+//    key <AE12>	{ [        plus, asciicircum, dead_tilde, dead_circumflex ]	};
+
+//  key <AD11>	{ [   parenleft,  bracketleft ]	};
+//  key <AD12>	{ [  parenright, bracketright ]	};
+
+//  key <AC10>	{ [       minus,     exclam ]	};
+//  key <AC11>	{ [       colon,     dollar ]	};
+//  key <BKSL>	{ [   semicolon,         at ]	};
+
+//  key <LSGT>	{ [  apostrophe,        bar ]	};
+//  key <AB08>	{ [       comma,       less ]	};
+//  key <AB09>	{ [      period,    greater ]	};
+//  key <AB10>	{ [       slash,   question ]	};
+
+};
+
+
+// Text layout for (brazilian) 102-key keyboard
+xkb_symbols "num102" {
+
+    include "kt(num)"
+
+//  key <AB09>	{ [    period,     exclam, periodcentered,  downarrow ]	};
+    key <AB10>	{ [  quotedbl,   exclam, dead_belowdot, dead_abovedot ] };
+    // ABNT-2 keyboard has this special key
+    key <AB11>	{ [     slash, question,  questiondown,   lessthanequal   ]	};
+
+};
+
+
+// Development layout for (brazilian) 102-key keyboard
+xkb_symbols "dev102" {
+
+    include "kt(dev)"
+
+    //copy of key <TLDE>
+    key <AB10>	{ [ quotedbl, asciitilde, dead_belowdot, dead_abovedot]	};
+    // ABNT-2 keyboard has this special key
+    key <AB11>	{ [    slash,   question,  questiondown,    greaterthanequal ]	};
+
+};
+
+
+// us, with altgr accents, numbers swapped, and compose key
+xkb_symbols "us_mini" {
+    include "kt(dev)"      // accents, altgr symbols
+    include "us(base)"     // make symbols right
+    include "compose(102)" // make compose right again
+    include "kt(toprow_symbols_us)"
+};
+
+// WIP, swap " and `, 2-9 with symbols, move \()! to 4579 rejecting @%&| to AltGr
+xkb_symbols "us_nicer" {
+
+    include "kt(dev)"      // accents, altgr symbols
+    include "us(base)"     // make symbols right
+
+    key <TLDE> {	[	quotedbl	  ,asciitilde, grave, dead_tilde ]	};
+    key <AC11> {	[	apostrophe	  ,grave        ]       };
+
+    key <AE01> {	[	1 		  ,1		]	};
+    key <AE02> {	[	backslash	  ,2, at	]	};
+    key <AE03> {	[	numbersign	  ,3		]	};
+    key <AE04> {	[	dollar		  ,4, EuroSign	]	};
+    key <AE05> {	[	parenleft	  ,5, percent	]	};
+    key <AE06> {	[	asciicircum	  ,6		]	};
+    key <AE07> {	[	parenright	  ,7, ampersand	]	};
+    key <AE08> {	[	asterisk	  ,8		]	};
+    key <AE09> {	[	exclam		  ,9, bar	]	};
+    key <AE10> {	[	0		  ,0		]	};
+
+    key <LWIN>  { type[Group1]="TWO_LEVEL", [ Multi_key, Multi_key ] };
+
+};
+
+
+// Minimal set of changes from br(abnt2) to accomodate a 101-key keyboard
+xkb_symbols "abnt2_mini" {
+
+    include "br(abnt2)"
+
+    name[Group1]="Brazil";
+
+    // Fourth row, compared with latin
+    //key <AB08>  { [     comma,       less, horizconnector,   multiply ] };
+    //key <AB09>  { [    period,    greater, periodcentered,   division ] };
+      key <AB08>  { [     comma,   question,           less,   multiply ] };
+      key <AB09>  { [    period,      slash,        greater,   division ] };
+      key <AB10>  { [ semicolon,      colon,       asterisk,     exclam ] };
+
+    // ABNT-2 keyboard has this special key
+    //key <AB11>  { [     slash,   question,       degree, questiondown ]	};
+
+    //key <KPPT>  { [ KP_Decimal ]	};
+
+    //Re-establish dot on keypad
+    include "kpdl(dot)"
+
+};
