@@ -23,7 +23,7 @@ lint:
 
 # Run tests
 test:
-	pytest
+	uv run python -m unittest tests -v
 
 # Run tests with coverage
 test-cov:

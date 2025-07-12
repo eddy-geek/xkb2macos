@@ -37,6 +37,7 @@ XKB_TO_MACOS_KEYCODE: Dict[str, int] = {
     'AD10': 35,  # P
     'AD11': 33,  # Left Brace ([)
     'AD12': 30,  # Right Brace (])
+    'BKSL': 42,  # Backslash (\)
 
     'AC01': 0,   # A
     'AC02': 1,   # S

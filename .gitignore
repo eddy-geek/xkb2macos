@@ -34,7 +34,7 @@ htmlcov/
 .DS_Store
 
 # Generated files
-*.keylayout
+# *.keylayout
 
 # Cache
 .cache/
