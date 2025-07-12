@@ -8,8 +8,24 @@
 
 -->
 <!--Last edited by Ukelele version 442 on 2025-07-12 at 01:07 (CEST)-->
+<!-- 
+  REFERENCE KEYBOARD LAYOUT FILE
+  This file demonstrates the full 8-level modifier structure used by macOS standard layouts.
+-->
+<!-- 
+  Root keyboard element attributes:
+  - group: Input source category identifier (126 = standard keyboard)
+  - id: Unique identifier for this keyboard layout
+  - name: Display name shown in Input Sources preferences
+  - maxout: Maximum number of characters that can be output by a single key action
+-->
 <keyboard group="126" id="-7444" name="English Standard" maxout="2">
+    <!-- 
+      layouts section: Defines which keyMapSet and modifierMap to use for different key ranges
+      Each layout element maps a range of key codes to specific mapSet and modifier definitions
+    -->
     <layouts>
+        <!-- first/last: Range of key codes this layout applies to -->
         <layout first="0" last="17" mapSet="16c" modifiers="f4"/>
         <layout first="18" last="18" mapSet="984" modifiers="f4"/>
         <layout first="21" last="23" mapSet="984" modifiers="f4"/>
@@ -19,8 +35,23 @@
         <layout first="200" last="201" mapSet="984" modifiers="f4"/>
         <layout first="206" last="207" mapSet="984" modifiers="f4"/>
     </layouts>
+    <!-- 
+      modifierMap: Defines how modifier keys (shift, option, command, control, caps) affect key output
+      - id: Identifier referenced by layout elements
+      - defaultIndex: Default modifier state (7 = control modifier in this case)
+    -->
     <modifierMap id="f4" defaultIndex="7">
+        <!-- 
+          keyMapSelect: Maps modifier combinations to specific mapIndex values
+          - mapIndex: References a specific keyMap in the keyMapSet
+        -->
         <keyMapSelect mapIndex="0">
+            <!-- 
+              modifier syntax:
+              - keys="command?": Optional command key (? means optional)
+              - keys="anyShift": Either left or right shift
+              - keys="caps": Caps lock engaged
+            -->            
             <modifier keys="command?"/>
             <modifier keys="anyShift? caps? command"/>
         </keyMapSelect>
@@ -48,8 +79,22 @@
             <modifier keys="caps? anyOption? command? control"/>
         </keyMapSelect>
     </modifierMap>
+    <!-- 
+      keyMapSet: Collection of keyMaps that define character outputs for different modifier states
+      - id: Identifier referenced by layout elements
+    -->
     <keyMapSet id="16c">
+        <!-- 
+          keyMap: Maps physical keys to outputs for a specific modifier state
+          - index: Corresponds to mapIndex in keyMapSelect
+        -->        
         <keyMap index="0">
+            <!-- 
+              key: Defines what happens when a specific key is pressed
+              - code: macOS virtual keycode (0 = A key)
+              - action: References an action defined elsewhere (for complex behaviors)
+              - output: Direct character output (alternative to action)
+            -->
             <key code="0" action="a14"/>
             <key code="1" output="s"/>
             <key code="2" output="d"/>
@@ -64,7 +109,7 @@
             <key code="11" output="b"/>
             <key code="12" output="q"/>
             <key code="13" output="w"/>
-            <key code="14" action="a15"/>
+            <key code="14" action="a15"/> <!-- action seem to be used when dead keys have an impact (here E) -->
             <key code="15" output="r"/>
             <key code="16" action="a20"/>
             <key code="17" output="t"/>
