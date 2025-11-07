@@ -152,6 +152,12 @@ You can then add the missing mappings to the `special_keysyms` dictionary in `co
 
 If you get an error that your layout wasn't found, check the available layouts in the XKB file and make sure you're using the correct name.
 
+## Resources
+
+[My MacOS Keyboard layout spec summary](./docs/keylayout-spec.md)
+
+[Layout installation](./docs/installation.md)
+
 ## License
 
 This project is open source and available under the MIT License.
