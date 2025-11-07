@@ -31,6 +31,33 @@ For development, install with the development dependencies:
 pip install -e ".[dev]"
 ```
 
+## Quick Start
+
+Convert and install a keyboard layout in one go:
+
+```bash
+# 1. Convert XKB layout to .keylayout
+python3 convert_layout.py --layout dev --output-dir .
+
+# 2. Install the layout (requires sudo)
+python3 install_bundle.py dev.keylayout
+
+# 3. Log out and log back in, then add the layout in System Preferences
+```
+
+Or with a custom icon:
+
+```bash
+# 1. Create your icon (1024x1024 PNG)
+# 2. Convert and install with icon (PNG will be auto-converted)
+python3 convert_layout.py --layout dev --output-dir .
+python3 install_bundle.py --icon my_icon.png dev.keylayout
+
+# Or manually convert first if you prefer
+python3 generate_icons.py my_icon.png
+python3 install_bundle.py --icon my_icon.icns dev.keylayout
+```
+
 ## Usage
 
 ### Basic Usage
@@ -92,10 +119,81 @@ xkb-to-macos --layout invalid
 
 ## Installing the Generated Layout on macOS
 
-1. Copy the generated `.keylayout` file to `/Library/Keyboard Layouts/` (system-wide) or `~/Library/Keyboard Layouts/` (user-specific)
+### Quick Installation (Recommended)
+
+Use the included `install_bundle.py` script to create a proper bundle and install it:
+
+```bash
+# Basic installation (requires sudo for system-wide installation)
+python3 install_bundle.py xkb_to_macos/data/dev.keylayout
+
+# With custom icon (PNG or ICNS - PNG will be auto-converted)
+python3 install_bundle.py --icon icons/my_icon.png xkb_to_macos/data/dev.keylayout
+
+# User installation (no sudo, but less reliable)
+python3 install_bundle.py --user xkb_to_macos/data/dev.keylayout
+
+# Full customization
+python3 install_bundle.py \
+  --name "My Dev Layout" \
+  --bundle-id com.example.keyboardlayout.dev \
+  --icon icons/dev.icns \
+  --language en-US \
+  xkb_to_macos/data/dev.keylayout
+```
+
+The script will:
+- Create a properly structured `.bundle` with `Info.plist`
+- Include your custom icon (if provided)
+- Install to `/Library/Keyboard Layouts/` (system-wide, recommended) or `~/Library/Keyboard Layouts/` (user-specific)
+- Handle overwriting existing installations
+
+After installation:
+1. Log out and log back in (or restart)
+2. Open System Preferences/Settings > Keyboard > Input Sources
+3. Click "+" and find your layout under "Others"
+
+### Manual Installation
+
+If you prefer to install manually:
+
+1. Copy the generated `.keylayout` file to:
+   - `/Library/Keyboard Layouts/` (system-wide, recommended - requires sudo)
+   - `~/Library/Keyboard Layouts/` (user-specific, may have compatibility issues)
+
+```bash
+# System-wide (recommended)
+sudo cp dev.keylayout /Library/Keyboard\ Layouts/
+
+# User-specific
+cp dev.keylayout ~/Library/Keyboard\ Layouts/
+```
+
 2. Log out and log back in
 3. Open System Preferences > Keyboard > Input Sources
 4. Click the "+" button and find your layout under "Others"
+
+**Note**: Manual installation using `.keylayout` files (not bundles) will show a default keyboard icon in the menu bar.
+
+### Creating Custom Icons
+
+To create custom icons for your keyboard layouts:
+
+1. Design a 1024x1024 PNG icon (simple design works best for menu bar display)
+2. Use directly with the installation script (auto-converts to ICNS):
+
+```bash
+python3 install_bundle.py --icon your_icon.png your_layout.keylayout
+```
+
+Or manually convert to ICNS first:
+
+```bash
+python3 generate_icons.py your_icon.png
+python3 install_bundle.py --icon your_icon.icns your_layout.keylayout
+```
+
+See `icons/README.md` for detailed icon creation guidelines and requirements.
 
 ## How It Works
 
@@ -152,11 +250,53 @@ You can then add the missing mappings to the `special_keysyms` dictionary in `co
 
 If you get an error that your layout wasn't found, check the available layouts in the XKB file and make sure you're using the correct name.
 
+## Tools
+
+### install_bundle.py
+
+Creates and installs macOS keyboard layout bundles with proper structure and metadata.
+
+**Features**:
+- Generates properly structured `.bundle` with `Info.plist`
+- Supports custom icons (`.png` or `.icns` format)
+- Automatically converts PNG to ICNS format
+- Handles system-wide or user-specific installation
+- Overwrites existing installations safely
+- Follows macOS best practices for keyboard layout bundles
+
+**Usage**:
+```bash
+python3 install_bundle.py --help
+```
+
+See examples in the "Installing the Generated Layout on macOS" section above.
+
+### generate_icons.py
+
+Converts PNG images to ICNS format for use as keyboard layout icons.
+
+**Features**:
+- Converts PNG to ICNS with all required sizes
+- Uses macOS native tools (`sips`, `iconutil`)
+- Generates proper iconset structure
+
+**Usage**:
+```bash
+# Convert a PNG to ICNS
+python3 generate_icons.py your_icon.png
+
+# View icon creation guidelines
+python3 generate_icons.py
+```
+
+See `icons/README.md` for detailed icon design guidelines.
+
 ## Resources
 
-[My MacOS Keyboard layout spec summary](./docs/keylayout-spec.md)
-
-[Layout installation](./docs/installation.md)
+- [docs/INSTALLATION_GUIDE.md](./docs/INSTALLATION_GUIDE.md) - **Complete step-by-step installation guide**
+- [docs/keylayout-spec.md](./docs/keylayout-spec.md) - macOS keyboard layout XML specification
+- [docs/bundles-and-install-methods.md](./docs/bundles-and-install-methods.md) - Technical details on how macOS keyboard layouts work
+- [icons/README.md](./icons/README.md) - Icon creation guidelines
 
 ## License
 
