@@ -10,6 +10,7 @@ This tool converts Linux XKB keyboard layouts to macOS .keylayout files. It pars
 - Handles special characters and dead keys
 - Supports different layout variants
 - Generates valid macOS .keylayout XML files
+- Visualizes keyboard layouts as interactive SVG diagrams
 
 ## Requirements
 
@@ -251,6 +252,38 @@ You can then add the missing mappings to the `special_keysyms` dictionary in `co
 If you get an error that your layout wasn't found, check the available layouts in the XKB file and make sure you're using the correct name.
 
 ## Tools
+
+### keylayout_viewer.py
+
+Generates interactive SVG visualizations of macOS keyboard layouts.
+
+**Features**:
+- Smart layer optimization (hides predictable A-Z mappings)
+- Color-coded modifier states
+- Interactive tooltips with Unicode codepoints
+- Dead key visualization with special markers
+- Dynamic legend showing only used modifiers
+- Zero external dependencies (stdlib only)
+
+**Usage**:
+```bash
+# Basic visualization
+python3 keylayout_viewer/keylayout_viewer.py layout.keylayout
+
+# With interactive tooltips
+python3 keylayout_viewer/keylayout_viewer.py layout.keylayout --interactive
+
+# Specify output file
+python3 keylayout_viewer/keylayout_viewer.py layout.keylayout output.svg
+```
+
+**Example**:
+```bash
+# Visualize the generated dev layout
+python3 keylayout_viewer/keylayout_viewer.py data/output/dev.keylayout --interactive
+```
+
+See `keylayout_viewer/README.md` for more details.
 
 ### install_bundle.py
 

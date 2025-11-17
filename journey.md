@@ -23,3 +23,39 @@ For future improvements, we might consider:
 
 1. Implementing a more sophisticated handling of dead keys
 2. Ability to install and update the generated .keylayout files
+
+## Keylayout Viewer Implementation (Nov 8, 2025)
+
+Created a comprehensive SVG visualization tool for macOS .keylayout files:
+
+### Features Implemented
+- **Smart Layer Optimization**: Automatically hides predictable A-Z mappings (a→A) to reduce clutter
+- **Adaptive Display**: Only shows modifier combinations that produce actual output
+- **Interactive SVG**: Hover tooltips with Unicode codepoints and full key details
+- **Dead Key Visualization**: Special markers (◌́, ◌̈) with dashed borders for combining diacritics
+- **Dynamic Legend**: Only displays modifiers actually used in the layout
+- **Multiple Format Support**: Handles both standard and alternative keylayout XML structures
+
+### Implementation Details
+- 650+ lines of Python with zero external dependencies (stdlib only)
+- 23 comprehensive tests, all passing
+- Supports US ANSI keyboard geometry with accurate key positioning
+- Color-coded modifier states for visual clarity
+- Graceful handling of invalid XML control characters
+
+### Testing Results
+✓ Successfully tested with:
+- `data/output/dev.keylayout` (47 keys, 10 dead keys)
+- `data/dev-dead-keys.keylayout` (46 keys, 9 dead keys, alternative format)
+- `data/English_Standard.keylayout` (72 keys, 16 dead keys, 8 modifier levels)
+
+### Files Created
+- `keylayout_viewer/keylayout_viewer.py` - Main implementation
+- `keylayout_viewer/test_keylayout_viewer.py` - Comprehensive test suite
+- `keylayout_viewer/SPECS.md` - Detailed specification document
+- `keylayout_viewer/README.md` - Quick reference guide
+
+### Usage
+```bash
+python3 keylayout_viewer/keylayout_viewer.py input.keylayout [output.svg] [--interactive]
+```
