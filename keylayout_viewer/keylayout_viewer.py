@@ -142,6 +142,7 @@ class KeylayoutParser:
         
         # Parse the cleaned XML
         self.root = ET.fromstring(content)
+        self.actions_map = self._parse_actions()
     
     def parse_file(self) -> KeyboardLayout:
         """Parse the keylayout file and extract all data"""
@@ -174,13 +175,21 @@ class KeylayoutParser:
                 if output:
                     outputs[code][state_name] = output
                     continue
-                
-                # Try action element
-                action = key.find('action')
-                if action is not None:
-                    action_output = action.get('output')
+
+                # Try inline action element
+                action_elem = key.find('action')
+                if action_elem is not None:
+                    action_output = action_elem.get('output')
                     if action_output:
                         outputs[code][state_name] = action_output
+                        continue
+
+                # Try referenced action id
+                action_id = key.get('action')
+                if action_id:
+                    resolved_output = self._resolve_action_output(action_id, state_name)
+                    if resolved_output:
+                        outputs[code][state_name] = resolved_output
         
         # Also handle alternative structure where keys are directly in keyMapSet
         # with multiple action elements per key (dev-dead-keys.keylayout format)
@@ -196,6 +205,52 @@ class KeylayoutParser:
                         outputs[code][state_name] = action_output
         
         return dict(outputs)
+    
+    def _parse_actions(self) -> Dict[str, Dict[str, str]]:
+        """Parse global action definitions"""
+        actions = {}
+        for action in self.root.findall('.//action'):
+            action_id = action.get('id')
+            if not action_id:
+                continue
+            state_outputs = {}
+            for when in action.findall('when'):
+                state = when.get('state')
+                output = when.get('output')
+                if state and output:
+                    state_outputs[state] = output
+            if state_outputs:
+                actions[action_id] = state_outputs
+        return actions
+    
+    def _resolve_action_output(self, action_id: str, state_name: str) -> Optional[str]:
+        """Resolve the output for a referenced action given the modifier state"""
+        action = self.actions_map.get(action_id)
+        if not action:
+            return None
+
+        candidates = [state_name]
+        if '+' in state_name:
+            candidates.append(state_name.replace('+', ' '))
+
+        alias_map = {
+            'base': 'none',
+            'shift': 'shift',
+            'option': 'option',
+            'caps': 'caps',
+        }
+        alias = alias_map.get(state_name)
+        if alias:
+            candidates.append(alias)
+
+        # Fallback to 'none' for unspecified states
+        if 'none' not in candidates:
+            candidates.append('none')
+
+        for candidate in candidates:
+            if candidate in action:
+                return action[candidate]
+        return None
     
     def _index_to_state(self, index: int) -> str:
         """Map keyMap index to modifier state name"""
@@ -296,15 +351,19 @@ class OutputOptimizer:
         visible = {}
         
         if classification == 'PREDICTABLE_LETTER':
-            # Hide lower-case variant
+            # Always show the Shift (uppercase) value if defined
+            shift_char = outputs.get('shift')
+            if shift_char:
+                visible['shift'] = ('shift', shift_char)
+
+            # Show other non-letter modifier outputs (Option, Shift+Option, etc.)
             for state, char in outputs.items():
-                if state not in ['base'] and char:
+                if state not in ['base', 'shift'] and char:
                     visible[state] = (state, char)
         
         elif classification == 'UNIFORM':
-            for state, char in outputs.items():
-                visible['base'] = (state, char)
-                break
+            # Show nothing if all outputs are the same
+            pass
         
         elif classification == 'DEAD_KEY':
             # Show all dead key states with special formatting
@@ -382,6 +441,7 @@ class SVGRenderer:
       .dead-key { stroke: #CC0000; stroke-dasharray: 3,3; stroke-width: 2; }
       .badge { fill: #FFD700; font-size: 10px; font-weight: bold; }
       .legend-text { font-family: "SF Mono", Monaco, monospace; font-size: 11px; }
+      .legend-bg { fill: white; stroke: #CCC; stroke-width: 1; rx: 6; }
     ]]>
   </style>
 </defs>''')
@@ -471,8 +531,9 @@ class SVGRenderer:
     def _add_legend(self):
         """Add legend showing modifier colors and dead keys"""
         used_modifiers = OutputOptimizer.get_used_modifiers(self.layout)
-        
+
         self.svg_parts.append('<g id="legend" transform="translate(10, 290)">')
+        self.svg_parts.append('  <rect x="-5" y="-20" width="730" height="110" class="legend-bg"/>')
         self.svg_parts.append('  <text x="0" y="0" class="legend-text" font-weight="bold">Legend:</text>')
         
         x_offset = 0

@@ -1,9 +1,9 @@
 # Keylayout SVG Viewer - Implementation Specifications
 
 ## Objective
-Create a Python script that parses macOS `.keylayout` XML files and generates an **intelligent, minimal SVG visualization** of the keyboard layout showing character outputs for different modifier combinations.
+Create a Python script that parses macOS `.keylayout` XML files and generates an **minimal SVG visualization** of the keyboard layout showing character outputs for different modifier combinations.
 
-## Key Innovations
+## Key Features
 1. **Smart Layer Optimization:** Automatically hide predictable outputs (A→a, A+Shift→A) to reduce visual clutter
 2. **Adaptive Display:** Show only the modifier combinations that actually produce characters
 3. **Interactive SVG:** Hover tooltips with Unicode details, optional click-to-expand for complex keys
@@ -21,7 +21,7 @@ Create a Python script that parses macOS `.keylayout` XML files and generates an
 - Parse the `.keylayout` XML structure focusing on:
   - `<keyMap>` elements with different `index` values (modifier states)
   - `<key>` elements with `code` and `output`/`action` attributes
-  - `<action>` elements for complex key behaviors (if present)
+  - `<action>` elements for complex key behaviors (resolve `action` references to actual outputs by state)
   - `<modifierMap>` to understand modifier combinations
 
 ### 2. Key Code Mapping
@@ -232,6 +232,9 @@ def get_active_modifiers(layout):
 - **Invalid key codes:** Skip or show error marker
 - **Malformed XML:** Graceful degradation with partial output
 - **Missing modifier maps:** Use default 4-state (base, shift, opt, shift+opt)
+- **Resolving action references:** 
+  - If an action reference is found, follow the action ID to find the actual output.
+  - If the action ID is not found, show an error marker.
 
 ### 6. Implementation Structure
 
@@ -240,6 +243,7 @@ class KeylayoutParser:
     def parse_file(path) -> KeyboardLayout
     def extract_modifier_maps() -> List[ModifierState]
     def extract_key_outputs() -> Dict[keycode, Dict[state, char]]
+    def resolve_actions() -> Dict[str, Dict[str, str]]
     def detect_dead_keys() -> Dict[keycode, DeadKeyInfo]
     
 class OutputOptimizer:
